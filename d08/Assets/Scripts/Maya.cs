@@ -12,10 +12,12 @@ public class Maya : MonoBehaviour {
 
 	NavMeshAgent nav;
 	Animator anim;
+	Creature my;
 
 	void Start () {
 		nav = this.GetComponent<NavMeshAgent> ();
 		anim = this.GetComponent<Animator> ();
+		my = this.GetComponent<Creature> ();
 	}
 
 	void Update () {
@@ -30,9 +32,15 @@ public class Maya : MonoBehaviour {
 			r = cam.ScreenPointToRay(mouse);
 			if (Physics.Raycast(r, out hit, 100)) {
 				if (hit.collider != null) {
-					anim.SetBool ("run", true);
-					Debug.DrawLine(r.origin, hit.point, Color.green);
-					nav.destination = hit.point;
+					if (hit.collider.tag == "Enemy" && Vector3.Distance (transform.position, hit.collider.gameObject.transform.position) < 3 ) {
+						my.target = hit.collider.gameObject.GetComponent<Creature> ();
+						anim.SetTrigger ("atk");
+					}
+					else {
+						anim.SetBool ("run", true);
+						Debug.DrawLine(r.origin, hit.point, Color.green);
+						nav.destination = hit.point;
+					}
 				}
 				else
 					anim.SetBool ("run", false);
