@@ -16,16 +16,19 @@ public class ZombieNavMesh : MonoBehaviour {
 
 	private bool focus;
 	private IEnumerator burying;
+	private Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		focus = false;
+		anim = this.GetComponent<Animator> ();
 	}
 
 	public void IsPlayer (Collider col) {
 		if (col.tag == "Player" && !dead) {
 			maya = col.GetComponent<Maya> ();
 			focus = true;
+			anim.SetBool ("run", true);
 			StartCoroutine (TryHit ());
 		}
 	}
@@ -45,8 +48,12 @@ public class ZombieNavMesh : MonoBehaviour {
 	}
 
 	IEnumerator TryHit () {
-		if (Vector3.Distance (this.transform.position, maya.transform.position) <= 1.5f)
+		if (Vector3.Distance (this.transform.position, maya.transform.position) <= 1.5f) {
+			anim.SetBool ("run", false);
+			anim.SetTrigger ("atk");
 			this.GetComponent<Creature> ().Attack (maya.GetComponent<Creature> ());
+		} else if (!anim.GetBool ("run"))
+			anim.SetBool ("run", true);
 		yield return new WaitForSeconds (2);
 		StartCoroutine (TryHit ());
 	}
