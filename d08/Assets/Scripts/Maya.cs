@@ -11,7 +11,7 @@ public class Maya : MonoBehaviour {
 	Ray r;
 
 	NavMeshAgent nav;
-	//Animator anim;
+	Animator anim;
 
 	void Start () {
 		nav = this.GetComponent<NavMeshAgent> ();
