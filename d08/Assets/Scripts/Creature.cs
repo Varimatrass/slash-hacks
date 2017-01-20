@@ -24,8 +24,12 @@ public class Creature : MonoBehaviour {
 
 	public int Gold;
 
+	private Creature target;
+
 	public void Attack(Creature creature)
 	{
+		if (creature == null)
+			creature = target;
 		if (Random.Range (1, 100) > Accuracy - creature.Dodge)
 			return;
 
