@@ -12,7 +12,7 @@ public class Health : MonoBehaviour {
 
 	private void Start() {
 		Slider = GetComponent<Slider> ();
-		Text = GetComponent<Text> ();
+		Text = GetComponentInChildren<Text> ();
 	}
 
 	void Update () {

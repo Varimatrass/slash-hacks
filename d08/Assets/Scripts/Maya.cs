@@ -20,7 +20,17 @@ public class Maya : MonoBehaviour {
 		my = this.GetComponent<Creature> ();
 	}
 
+	public Canvas HUD;
+	public Canvas Inventory;
+	private bool IsInventoryOpen;
+
 	void Update () {
+
+		if (Input.GetKeyDown (KeyCode.C)) {
+			IsInventoryOpen = !IsInventoryOpen;
+			Inventory.gameObject.SetActive (IsInventoryOpen);
+			HUD.gameObject.SetActive (!IsInventoryOpen);
+		}
 
 		//anim.SetBool ("run", (nav.angularSpeed > 0.5 ? true : false));
 		cam.transform.position = this.gameObject.transform.position + new Vector3 (5, 10 ,0);
