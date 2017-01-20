@@ -9,6 +9,7 @@ public class Creature : MonoBehaviour {
 	public int Constitution;
 	public int Armor;
 
+	[HideInInspector]
 	public int HP;
 	public int HPMax { get { return Constitution * 5; } }
 
@@ -22,7 +23,6 @@ public class Creature : MonoBehaviour {
 	public int ExperienceToNextLevel { get { return 100 + Level * Level; } }
 
 	public int Gold;
-
 
 	public void Attack(Creature creature)
 	{
@@ -62,5 +62,10 @@ public class Creature : MonoBehaviour {
 			Level++;
 			OnLevelUp ();
 		}
+	}
+
+	private void Start()
+	{
+		HP = HPMax;
 	}
 }
