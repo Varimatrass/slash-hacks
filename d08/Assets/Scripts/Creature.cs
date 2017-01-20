@@ -28,7 +28,7 @@ public class Creature : MonoBehaviour {
 
 	Animator anim;
 
-	public void Attack(Creature creature)
+	public virtual void Attack(Creature creature)
 	{
 		if (creature == null)
 			creature = target;
@@ -38,25 +38,25 @@ public class Creature : MonoBehaviour {
 		creature.OnDamaged(this, Random.Range (DamageMin, DamageMax) * (1 - creature.Armor / 200));
 	}
 	
-	public void OnDamaged(Creature source, int damage)
+	public virtual void OnDamaged(Creature source, int damage)
 	{
 		HP -= damage;
 		if (HP <= 0)
 			OnDeath (source);
 	}
 
-	public void OnKill(Creature creature)
+	public virtual void OnKill(Creature creature)
 	{
 		Gold += creature.Gold;
 		GainExperience (creature.Experience);
 	}
 
-	public void OnDeath(Creature source)
+	public virtual void OnDeath(Creature source)
 	{
 		anim.SetTrigger ("dead");
 	}
 
-	public void GoInGround()
+	public virtual void GoInGround()
 	{
 	}
 
@@ -64,11 +64,11 @@ public class Creature : MonoBehaviour {
 //	{
 //	}
 
-	public void OnLevelUp()
+	public virtual void OnLevelUp()
 	{
 	}
 
-	public void GainExperience(int amount)
+	public virtual void GainExperience(int amount)
 	{
 		Experience += amount;
 		if (Experience >= ExperienceToNextLevel) {
