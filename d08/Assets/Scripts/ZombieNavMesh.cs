@@ -8,7 +8,7 @@ public class ZombieNavMesh : MonoBehaviour {
 	[HideInInspector]
 	public Maya maya;
 
-	//[HideInInspector]
+	[HideInInspector]
 	public bool dead = false;
 
 	[HideInInspector]
