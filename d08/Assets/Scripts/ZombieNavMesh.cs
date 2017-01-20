@@ -22,7 +22,7 @@ public class ZombieNavMesh : MonoBehaviour {
 		focus = false;
 	}
 
-	void OnTriggerEnter (Collider col) {
+	public void IsPlayer (Collider col) {
 		if (col.tag == "Player" && !dead) {
 			maya = col.GetComponent<Maya> ();
 			focus = true;
