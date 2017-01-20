@@ -31,11 +31,13 @@ public class ZombieNavMesh : MonoBehaviour {
 	}
 
 	public void DoneBurying () {
-		GameObject.Destroy (this.gameObject);
+		if (this.transform.position.y <= -2)
+			GameObject.Destroy (this.gameObject);
 	}
 
 	public void BuriedAgain () {
-		this.GetComponent<SphereCollider> ().enabled = false;
+		this.GetComponentInChildren<SphereCollider> ().enabled = false;
+		this.GetComponent<CapsuleCollider> ().enabled = false;
 		this.GetComponent<NavMeshAgent> ().enabled = false;
 		this.GetComponent<Rigidbody> ().useGravity = true;
 		this.GetComponent<Rigidbody> ().isKinematic = false;
@@ -51,13 +53,15 @@ public class ZombieNavMesh : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (this.GetComponent<Creature> ().HP == 0) {
+		if (this.GetComponent<Creature> ().HP <= 0 && !dead) {
 			dead = true;
 			focus = !focus;
 			this.GetComponent<NavMeshAgent> ().destination = this.transform.position;
 			this.GetComponent<Creature> ().OnDeath (maya.GetComponent<Creature> ());
+			BuriedAgain ();
 		}
 		else if (focus)
 			this.GetComponent<NavMeshAgent> ().destination = maya.transform.position;
+		DoneBurying ();
 	}
 }
