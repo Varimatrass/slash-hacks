@@ -20,17 +20,22 @@ public class Maya : MonoBehaviour {
 
 	void Update () {
 
-		//anim.SetBool ("run", (nav.angularSpeed > 0 ? true : false));
+		//anim.SetBool ("run", (nav.angularSpeed > 0.5 ? true : false));
 		cam.transform.position = this.gameObject.transform.position + new Vector3 (5, 10 ,0);
 
+		if (Vector3.Distance(nav.destination, transform.position) < 1.5)
+			anim.SetBool ("run", false);
 		if (Input.GetMouseButton(0)) {
 			mouse = Input.mousePosition;
 			r = cam.ScreenPointToRay(mouse);
 			if (Physics.Raycast(r, out hit, 100)) {
 				if (hit.collider != null) {
+					anim.SetBool ("run", true);
 					Debug.DrawLine(r.origin, hit.point, Color.green);
 					nav.destination = hit.point;
 				}
+				else
+					anim.SetBool ("run", false);
 			}
 		}
 	}
