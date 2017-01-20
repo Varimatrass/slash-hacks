@@ -23,6 +23,8 @@ public class Creature : MonoBehaviour {
 
 	public int Gold;
 
+	public string Name;
+
 	[HideInInspector]
 	public Creature target;
 
