@@ -8,31 +8,44 @@ public class ZombieNavMesh : MonoBehaviour {
 	[HideInInspector]
 	public Maya maya;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public bool dead = false;
 
+	[HideInInspector]
+	public int life = 3;
+
 	private bool focus;
+	private IEnumerator burying;
 
 	// Use this for initialization
 	void Start () {
 		focus = false;
+		burying = isBuried ();
 	}
 
 	void OnTriggerEnter (Collider col) {
-		if (col.name == "Maya") {
+		if (col.tag == "Player" && !dead) {
 			maya = col.GetComponent<Maya> ();
 			focus = true;
 		}
 	}
 
-	void BuriedAgain () {
-		
+	public void DoneBurying () {
+		GameObject.Destroy (this.gameObject);
+	}
+
+	public void BuriedAgain () {
+		this.GetComponent<SphereCollider> ().enabled = false;
+		this.GetComponent<NavMeshAgent> ().enabled = false;
+		this.GetComponent<Rigidbody> ().useGravity = true;
+		this.GetComponent<Rigidbody> ().isKinematic = false;
+		this.GetComponent<Rigidbody> ().drag = 10;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (dead)
-			BuriedAgain ();
+			focus = !focus;
 		else if (focus) {
 			this.GetComponent<NavMeshAgent> ().destination = maya.transform.position;
 		}
