@@ -24,7 +24,8 @@ public class Creature : MonoBehaviour {
 
 	public int Gold;
 
-	private Creature target;
+	[HideInInspector]
+	public Creature target;
 
 	public void Attack(Creature creature)
 	{

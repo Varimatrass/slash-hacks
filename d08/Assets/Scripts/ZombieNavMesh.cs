@@ -20,7 +20,6 @@ public class ZombieNavMesh : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		focus = false;
-		burying = isBuried ();
 	}
 
 	void OnTriggerEnter (Collider col) {
