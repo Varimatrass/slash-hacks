@@ -27,6 +27,8 @@ public class Creature : MonoBehaviour {
 	[HideInInspector]
 	public Creature target;
 
+	Animator anim;
+
 	public void Attack(Creature creature)
 	{
 		if (creature == null)
@@ -52,8 +54,16 @@ public class Creature : MonoBehaviour {
 
 	public void OnDeath(Creature source)
 	{
-		//TODO Animation
+		anim.SetTrigger ("dead");
 	}
+
+	public void GoInGround()
+	{
+	}
+
+//	IEnumerator ToDestroy ()
+//	{
+//	}
 
 	public void OnLevelUp()
 	{
@@ -72,5 +82,6 @@ public class Creature : MonoBehaviour {
 	private void Start()
 	{
 		HP = HPMax;
+		anim = this.GetComponent<Animator> ();
 	}
 }
