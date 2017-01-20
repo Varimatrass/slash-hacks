@@ -41,12 +41,22 @@ public class ZombieNavMesh : MonoBehaviour {
 		this.GetComponent<Rigidbody> ().drag = 10;
 	}
 
+	void TryHit () {
+		if (Vector3.Distance (this.transform.position, maya.transform.position) <= 1.5f)
+			this.GetComponent<Creature> ().Attack (maya.GetComponent<Creature> ());
+	}
+
 	// Update is called once per frame
 	void Update () {
-		if (dead)
+		if (this.GetComponent<Creature> ().HP == 0) {
+			dead = true;
 			focus = !focus;
+			this.GetComponent<NavMeshAgent> ().destination = this.transform.position;
+			this.GetComponent<Creature> ().OnDeath (maya.GetComponent<Creature> ());
+		}
 		else if (focus) {
 			this.GetComponent<NavMeshAgent> ().destination = maya.transform.position;
+			this.TryHit ();
 		}
 	}
 }
