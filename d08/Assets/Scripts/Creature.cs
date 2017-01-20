@@ -9,8 +9,7 @@ public class Creature : MonoBehaviour {
 	public int Constitution;
 	public int Armor;
 
-	[HideInInspector]
-	public int HP;
+	public int HP { get; private set; }
 	public int HPMax { get { return Constitution * 5; } }
 
 	public int DamageMin { get { return Strenght / 2; } }
